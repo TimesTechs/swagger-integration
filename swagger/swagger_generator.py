@@ -50,7 +50,54 @@ def get_pydantic_model_schema(model_name, module):
     return None
 
 
-def process_function(app_name, module_name, func_name, func, swagger, module):
+def build_security_schemes(swagger_settings):
+    """Build OpenAPI security schemes from Swagger Settings.
+
+    Args:
+        swagger_settings: The Swagger Settings single DocType.
+
+    Returns:
+        tuple[dict, list]: securitySchemes map and global security requirements.
+    """
+    schemes = {}
+    security = []
+
+    if swagger_settings.token_based_basicauth:
+        schemes["basicAuth"] = {
+            "type": "http",
+            "scheme": "basic",
+        }
+        security.append({"basicAuth": []})
+
+    if swagger_settings.bearerauth:
+        schemes["bearerAuth"] = {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT",
+        }
+        security.append({"bearerAuth": []})
+
+    if swagger_settings.sessionauth:
+        # OpenAPI 3.0 cookie apiKey. The sid cookie is HttpOnly; Swagger UI
+        # cannot set it from the Authorize dialog. The SessionAuth form on
+        # /swagger logs in via POST /api/method/login so the browser stores
+        # and sends the cookie automatically.
+        schemes["sessionAuth"] = {
+            "type": "apiKey",
+            "in": "cookie",
+            "name": "sid",
+            "description": (
+                "Frappe session cookie (sid). Use the Session Authentication "
+                "form on this page to log in. The browser sends the cookie "
+                "automatically; do not paste the session id here."
+            ),
+        }
+        security.append({"sessionAuth": []})
+
+    return schemes, security
+
+
+def process_function(app_name, module_name, func_name, func, swagger, module, security=None):
     """Process each function to update the Swagger paths.
     
     Args:
@@ -60,6 +107,7 @@ def process_function(app_name, module_name, func_name, func, swagger, module):
         func (function): The function object.
         swagger (dict): The Swagger specification to be updated.
         module (module): The module where the function is defined.
+        security (list | None): Enabled OpenAPI security requirements.
     """
     try:
         source_code = inspect.getsource(func)
@@ -149,7 +197,7 @@ def process_function(app_name, module_name, func_name, func, swagger, module):
             "parameters": params,
             "requestBody": request_body if request_body else None,
             "responses": responses,
-            "security": [{"basicAuth": []}],
+            "security": security if security else [{"basicAuth": []}],
         }
     except Exception as e:
         # Log any errors that occur during processing
@@ -195,24 +243,33 @@ def generate_swagger_json():
     }
 
     # Add security schemes based on the settings in "Swagger Settings"
-    if swagger_settings.token_based_basicauth or swagger_settings.bearerauth:
-        swagger["components"]["securitySchemes"] = {}
-        swagger["security"] = []
+    security_schemes, security = build_security_schemes(swagger_settings)
+    if security_schemes:
+        swagger["components"]["securitySchemes"] = security_schemes
+        swagger["security"] = security
 
-    if swagger_settings.token_based_basicauth:
-        swagger["components"]["securitySchemes"]["basicAuth"] = {
-            "type": "http",
-            "scheme": "basic",
+    if swagger_settings.sessionauth:
+        swagger["paths"]["/api/method/frappe.auth.get_logged_user"] = {
+            "get": {
+                "summary": "Get Logged User",
+                "description": (
+                    "Returns the current Frappe session user "
+                    "(frappe.session.user) after SessionAuth login."
+                ),
+                "tags": ["session"],
+                "parameters": [],
+                "requestBody": None,
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {"schema": {"type": "string"}}
+                        },
+                    }
+                },
+                "security": security if security else [{"sessionAuth": []}],
+            }
         }
-        swagger["security"].append({"basicAuth": []})
-
-    if swagger_settings.bearerauth:
-        swagger["components"]["securitySchemes"]["bearerAuth"] = {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT",
-        }
-        swagger["security"].append({"bearerAuth": []})
 
     # Get the path to the Frappe bench directory
     frappe_bench_dir = frappe.utils.get_bench_path()
@@ -242,7 +299,15 @@ def generate_swagger_json():
                 module = load_module_from_file(file_path)
                 module_name = os.path.basename(file_path).replace(".py", "")
                 for func_name, func in inspect.getmembers(module, inspect.isfunction):
-                    process_function(app, module_name, func_name, func, swagger, module)
+                    process_function(
+                        app,
+                        module_name,
+                        func_name,
+                        func,
+                        swagger,
+                        module,
+                        security,
+                    )
             else:
                 print(f"File not found: {file_path}")
         except Exception as e:
@@ -261,3 +326,26 @@ def generate_swagger_json():
         json.dump(swagger, swagger_file, indent=4)
 
     frappe.msgprint("Swagger JSON generated successfully.")
+
+
+@frappe.whitelist(allow_guest=True, methods=["GET"])
+def get_session_info():
+    """Return the current Frappe session user and CSRF token for Swagger UI.
+
+    CSRF is already a same-origin browser secret. This method only exposes it
+    to the Swagger page so subsequent POST/PUT/DELETE calls can send
+    X-Frappe-CSRF-Token. Passwords and session ids are never returned.
+    """
+    user = frappe.session.user
+    if not user or user == "Guest":
+        return {
+            "authenticated": False,
+            "user": "Guest",
+        }
+
+    return {
+        "authenticated": True,
+        "user": user,
+        "full_name": frappe.utils.get_fullname(user),
+        "csrf_token": frappe.sessions.get_csrf_token(),
+    }

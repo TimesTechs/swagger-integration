@@ -12,7 +12,9 @@
   "auth_settings_section",
   "token_based_basicauth",
   "column_break_lxux",
-  "bearerauth"
+  "bearerauth",
+  "column_break_sessionauth",
+  "sessionauth"
  ],
  "fields": [
   {
@@ -55,12 +57,23 @@
    "fieldname": "bearerauth",
    "fieldtype": "Check",
    "label": "BearerAuth"
+  },
+  {
+   "fieldname": "column_break_sessionauth",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Use Frappe login/session cookies (sid). Users authenticate with their existing Frappe account; no API keys required.",
+   "fieldname": "sessionauth",
+   "fieldtype": "Check",
+   "label": "SessionAuth"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-27 09:58:48.621772",
+ "modified": "2026-09-06 01:40:00.000000",
  "modified_by": "Administrator",
  "module": "Swagger UI",
  "name": "Swagger Settings",

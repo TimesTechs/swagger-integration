@@ -1,30 +1,290 @@
+<!-- no-cache -->
 <!DOCTYPE html>
 <html>
 <head>
   <title>Swagger UI</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui.css">
+  <style>
+    #swagger-session-auth {
+      font-family: sans-serif;
+      max-width: 1460px;
+      margin: 16px auto 0;
+      padding: 16px 20px;
+      background: #fff;
+      border: 1px solid #d8dde3;
+      border-radius: 4px;
+      color: #3b4151;
+    }
+    #swagger-session-auth h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    #swagger-session-auth p.hint {
+      margin: 0 0 12px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+    #swagger-session-auth .session-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #swagger-session-auth input {
+      height: 32px;
+      padding: 0 8px;
+      border: 1px solid #d8dde3;
+      border-radius: 4px;
+      min-width: 220px;
+    }
+    #swagger-session-auth button {
+      height: 32px;
+      padding: 0 14px;
+      border: none;
+      border-radius: 4px;
+      background: #4990e2;
+      color: #fff;
+      cursor: pointer;
+    }
+    #swagger-session-auth button.logout {
+      background: #6b7280;
+    }
+    #swagger-session-auth button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    #swagger-session-status {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    #swagger-session-status.ok { color: #3b4151; }
+    #swagger-session-status.error { color: #be3434; }
+  </style>
 </head>
 <body>
+  <script>window.frappe = window.frappe || {};</script>
+  <!-- csrf_token -->
+  {% if session_auth_enabled %}
+  <div id="swagger-session-auth">
+    <h3>Session Authentication</h3>
+    <p class="hint">Log in with your Frappe account. Swagger uses the same-origin session cookie (<code>sid</code>) and does not create API keys.</p>
+    <form id="swagger-session-form" class="session-row" autocomplete="on">
+      <input id="swagger-session-username" type="text" name="usr" placeholder="Username" autocomplete="username" required>
+      <input id="swagger-session-password" type="password" name="pwd" placeholder="Password" autocomplete="current-password" required>
+      <button id="swagger-session-login" type="submit">Login</button>
+      <button id="swagger-session-logout" type="button" class="logout" hidden>Logout</button>
+    </form>
+    <div id="swagger-session-status" class="ok">Status: Checking session...</div>
+  </div>
+  {% endif %}
   <div id="swagger-ui"></div>
+  <script>
+    window.SWAGGER_SESSION_AUTH = {{ session_auth_enabled | default(false) | tojson }};
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui-standalone-preset.js"></script>
   <script>
+    {% raw %}
     window.onload = function () {
+      const normalizeCsrf = function (token) {
+        if (!token || token === "None" || token === "null") {
+          return null;
+        }
+        return token;
+      };
+
+      const sessionCsrf = {
+        token: normalizeCsrf(window.frappe && window.frappe.csrf_token),
+      };
+
+      const getCsrfToken = function () {
+        return (
+          sessionCsrf.token ||
+          normalizeCsrf(window.frappe && window.frappe.csrf_token)
+        );
+      };
+
+      const setCsrfToken = function (token) {
+        sessionCsrf.token = normalizeCsrf(token);
+        window.frappe = window.frappe || {};
+        if (sessionCsrf.token) {
+          window.frappe.csrf_token = sessionCsrf.token;
+        } else {
+          window.frappe.csrf_token = "";
+        }
+      };
+
       const initializeSwaggerUI = async () => {
         const ui = SwaggerUIBundle({
           url: "/swagger.json",
           dom_id: "#swagger-ui",
           presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
           layout: "StandaloneLayout",
+          withCredentials: !!window.SWAGGER_SESSION_AUTH,
           requestInterceptor: (request) => {
-            request.headers["X-Frappe-CSRF-Token"] = null;
+            if (window.SWAGGER_SESSION_AUTH) {
+              request.credentials = "include";
+              request.withCredentials = true;
+            }
+            const csrf = getCsrfToken();
+            request.headers["X-Frappe-CSRF-Token"] = csrf || null;
             return request;
           },
         });
         window.ui = ui;
       };
+
+      const frappeFetch = async function (url, options) {
+        options = options || {};
+        const headers = Object.assign(
+          { Accept: "application/json" },
+          options.headers || {}
+        );
+        const csrf = getCsrfToken();
+        if (csrf) {
+          headers["X-Frappe-CSRF-Token"] = csrf;
+        }
+        return fetch(url, Object.assign({ credentials: "include" }, options, { headers: headers }));
+      };
+
+      const parseJson = async function (response) {
+        try {
+          return await response.json();
+        } catch (e) {
+          return {};
+        }
+      };
+
+      const setupSessionAuth = async function () {
+        if (!window.SWAGGER_SESSION_AUTH) {
+          return;
+        }
+
+        const form = document.getElementById("swagger-session-form");
+        const usernameInput = document.getElementById("swagger-session-username");
+        const passwordInput = document.getElementById("swagger-session-password");
+        const loginButton = document.getElementById("swagger-session-login");
+        const logoutButton = document.getElementById("swagger-session-logout");
+        const statusEl = document.getElementById("swagger-session-status");
+
+        const setStatus = function (text, isError) {
+          statusEl.textContent = text;
+          statusEl.className = isError ? "error" : "ok";
+        };
+
+        const setAuthenticated = function (info) {
+          loginButton.hidden = true;
+          logoutButton.hidden = false;
+          usernameInput.disabled = true;
+          passwordInput.disabled = true;
+          passwordInput.value = "";
+          if (info && info.user) {
+            usernameInput.value = info.user;
+          }
+          const userLabel = (info && (info.full_name ? info.full_name + " (" + info.user + ")" : info.user)) || "";
+          setStatus("Status: Authenticated. User: " + userLabel, false);
+        };
+
+        const setLoggedOut = function (message) {
+          loginButton.hidden = false;
+          logoutButton.hidden = true;
+          usernameInput.disabled = false;
+          passwordInput.disabled = false;
+          passwordInput.value = "";
+          setCsrfToken(null);
+          setStatus(message || "Status: Not authenticated", false);
+        };
+
+        const refreshSession = async function () {
+          const response = await frappeFetch("/api/method/swagger.swagger_generator.get_session_info", {
+            method: "GET",
+          });
+          const payload = await parseJson(response);
+          const info = payload.message || payload;
+          if (info && info.authenticated) {
+            setCsrfToken(info.csrf_token);
+            setAuthenticated(info);
+            return info;
+          }
+          setLoggedOut("Status: Not authenticated");
+          return null;
+        };
+
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const usr = (usernameInput.value || "").trim();
+          const pwd = passwordInput.value || "";
+          if (!usr || !pwd) {
+            setStatus("Status: Username and password are required.", true);
+            return;
+          }
+
+          loginButton.disabled = true;
+          setStatus("Status: Logging in...", false);
+          try {
+            const body = new URLSearchParams();
+            body.set("usr", usr);
+            body.set("pwd", pwd);
+            const response = await frappeFetch("/api/method/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+              },
+              body: body.toString(),
+            });
+            passwordInput.value = "";
+            const payload = await parseJson(response);
+            const message = payload.message;
+            const loginSucceeded =
+              response.ok &&
+              (message === "Logged In" ||
+                message === "No App" ||
+                payload.full_name);
+
+            if (!loginSucceeded) {
+              const errorMessage =
+                (typeof message === "string" && message) ||
+                "Invalid login credentials";
+              setLoggedOut("Status: Login failed. " + errorMessage);
+              setStatus("Status: Login failed. " + errorMessage, true);
+              return;
+            }
+
+            const info = await refreshSession();
+            if (!info) {
+              setStatus("Status: Login succeeded but the Frappe session could not be confirmed.", true);
+            }
+          } catch (e) {
+            passwordInput.value = "";
+            setStatus("Status: Login failed. " + (e && e.message ? e.message : "Network error"), true);
+          } finally {
+            loginButton.disabled = false;
+          }
+        });
+
+        logoutButton.addEventListener("click", async function () {
+          logoutButton.disabled = true;
+          try {
+            await frappeFetch("/api/method/logout", { method: "POST" });
+          } catch (e) {
+            // Session is still cleared locally so Try it out cannot reuse a stale UI state.
+          } finally {
+            logoutButton.disabled = false;
+            setLoggedOut("Status: Logged out");
+          }
+        });
+
+        try {
+          await refreshSession();
+        } catch (e) {
+          setLoggedOut("Status: Not authenticated");
+        }
+      };
+
       initializeSwaggerUI();
+      setupSessionAuth();
     };
+    {% endraw %}
   </script>
 </body>
 </html>
