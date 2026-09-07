@@ -7,6 +7,9 @@ import os
 import frappe
 from pydantic import BaseModel
 
+from swagger.swagger_custom_json import CUSTOM_APIS
+
+HTTP_METHODS = frozenset({"get", "post", "put", "patch", "delete", "options", "head"})
 
 def find_pydantic_model_in_decorator(node):
     """Find the name of the Pydantic model used in the validate_request decorator.
@@ -95,6 +98,42 @@ def build_security_schemes(swagger_settings):
         security.append({"sessionAuth": []})
 
     return schemes, security
+
+
+def _clean_operation(operation, default_security):
+    """Build a valid OpenAPI operation and apply default security when needed."""
+    if not isinstance(operation, dict):
+        return {}
+
+    cleaned = {key: value for key, value in operation.items() if value is not None}
+
+    if "security" not in cleaned and default_security:
+        cleaned["security"] = default_security
+
+    return cleaned
+
+
+def add_custom_apis(swagger, custom_apis, security):
+    """Merge manually defined APIs into swagger paths at the path/method level."""
+    if not custom_apis:
+        return
+
+    paths = swagger.setdefault("paths", {})
+    default_security = security if security else [{"basicAuth": []}]
+
+    for path, path_item in custom_apis.items():
+        if not path or not isinstance(path_item, dict):
+            continue
+
+        if path not in paths:
+            paths[path] = {}
+
+        for method, operation in path_item.items():
+            method_key = method.lower()
+            if method_key not in HTTP_METHODS:
+                continue
+
+            paths[path][method_key] = _clean_operation(operation, default_security)
 
 
 def process_function(app_name, module_name, func_name, func, swagger, module, security=None):
@@ -248,29 +287,6 @@ def generate_swagger_json():
         swagger["components"]["securitySchemes"] = security_schemes
         swagger["security"] = security
 
-    if swagger_settings.sessionauth:
-        swagger["paths"]["/api/method/frappe.auth.get_logged_user"] = {
-            "get": {
-                "summary": "Get Logged User",
-                "description": (
-                    "Returns the current Frappe session user "
-                    "(frappe.session.user) after SessionAuth login."
-                ),
-                "tags": ["session"],
-                "parameters": [],
-                "requestBody": None,
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application/json": {"schema": {"type": "string"}}
-                        },
-                    }
-                },
-                "security": security if security else [{"sessionAuth": []}],
-            }
-        }
-
     # Get the path to the Frappe bench directory
     frappe_bench_dir = frappe.utils.get_bench_path()
     file_paths = []
@@ -312,6 +328,8 @@ def generate_swagger_json():
                 print(f"File not found: {file_path}")
         except Exception as e:
             frappe.log_error(f"Error loading or processing file {file_path}: {str(e)}")
+
+    add_custom_apis(swagger, CUSTOM_APIS, security)
 
     # Define the path to the Swagger JSON file
     www_dir = os.path.join(frappe_bench_dir, "apps", "swagger", "swagger", "www")

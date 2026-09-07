@@ -1,0 +1,1347 @@
+{
+	"info": {
+		"_postman_id": "6198faf5-bf58-478d-870c-1a8e783210b0",
+		"name": "WerkIQ Go",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13452946",
+		"_collection_link": "https://red-capsule-370827.postman.co/workspace/My-Space~e27893ed-a95d-4497-a021-f48691978ae0/collection/13452946-6198faf5-bf58-478d-870c-1a8e783210b0?action=share&source=collection_link&creator=13452946"
+	},
+	"item": [ 
+		{
+			"name": "Travel Expense Claim",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Travel Expense Claim\",\n  \"company\": \"KMS Autohof-Betriebs 123\",\n  \"posting_date\": \"2026-08-01\",\n  \"edit_posting_date\": 0,\n  \"copy_recipient\": [],\n  \"hotel_booking_with_breakfast\": \"Yes\",\n  \"country\": \"Germany\",\n\n  \"employee_id\": \"HR-EMP-00277\",\n  \"employee_name\": \"Approver\",\n  \"company_code\": \"KMAH\",\n  \"approver\": \"chohan95332@gmail.com\",\n\n  \"departure_date_and_time\": \"2026-07-28 21:58:00\",\n  \"arrival_date_and_time\": \"2026-07-29 00:00:00\",\n  \"full_day\": 28,\n  \"half_day\": 14,\n\n  \"daily_allowance\": 1,\n  \"daily_allowance_details\": [\n    {\n      \"doctype\": \"Travel Expense Daily Allowance Detail\",\n      \"is_overnight_stay\": 0,\n      \"category_code\": \"101802\",\n      \"breakfast\": 1,\n      \"lunch\": 0,\n      \"dinner\": 0,\n      \"tip_amount\": 0,\n      \"total\": 8.4,\n      \"travel_date\": \"2026-07-28\",\n      \"overnight_stay\": 14,\n      \"number_of_overnight_stay\": 1\n    },\n    {\n      \"doctype\": \"Travel Expense Daily Allowance Detail\",\n      \"is_overnight_stay\": 0,\n      \"category_code\": \"101802\",\n      \"breakfast\": 1,\n      \"lunch\": 0,\n      \"dinner\": 0,\n      \"tip_amount\": 0,\n      \"total\": 8.4,\n      \"travel_date\": \"2026-07-29\",\n      \"overnight_stay\": 14,\n      \"number_of_overnight_stay\": 1\n    }\n  ],\n\n  \"invoice_claim\": 1,\n  \"use_ai\": 1,\n  \"replacement_receipt\": 0,\n\n  \"invoice_claim_details\": [\n    {\n      \"doctype\": \"Travel Expense Invoice Claim Detail\",\n      \"quantity\": 1,\n      \"currency\": \"EUR\",\n      \"vat_rate\": 19,\n      \"price\": 85.63,\n      \"vat_amount\": 16.27,\n      \"net_amount\": 85.63,\n      \"gross_amount\": 101.9,\n      \"vendor_name\": \"cyberport\",\n      \"invoice_no\": \"600265812752\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/MPPS6ASF_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"tax_included\": \"Yes\",\n      \"description\": \"1Q07-033 Microsoft Surface Slim Pen 2\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Flight Ticket (Domestic)\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101803\"\n    },\n    {\n      \"doctype\": \"Travel Expense Invoice Claim Detail\",\n      \"quantity\": 1,\n      \"currency\": \"EUR\",\n      \"vat_rate\": 19,\n      \"price\": 119.24,\n      \"vat_amount\": 22.66,\n      \"net_amount\": 119.24,\n      \"gross_amount\": 141.9,\n      \"vendor_name\": \"cyberport\",\n      \"invoice_no\": \"600165812752\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/MPPS6ASF_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"tax_included\": \"Yes\",\n      \"description\": \"1T27-02Y Microsoft Surface Pro\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Flight Ticket (Domestic)\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101803\"\n    }\n  ],\n\n  \"private_car\": 1,\n\n  \"private_car_expense_detail\": [\n    {\n      \"doctype\": \"Travel Expense Private Car Detail\",\n      \"category_code\": \"101801\",\n      \"travel_date\": \"2026-08-01\",\n      \"from_address\": \"Lahore\",\n      \"to_address\": \"Karachi\",\n      \"travelled_kilometers\": 1200,\n      \"rate_per_km\": 0.38,\n      \"claimed_amount\": 456,\n      \"vat_rate\": 0,\n      \"vat_amount\": 0\n    }\n  ],\n\n  \"total_tip\": 0,\n  \"total_vat_amount\": 38.93,\n  \"grand_total\": 733.4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Travel%20Expense%20Claim",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Travel%20Expense%20Claim"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Travel Expense Claim\",\n  \"company\": \"KMS Autohof-Betriebs\",\n  \"posting_date\": \"2026-08-01\",\n  \"edit_posting_date\": 0,\n  \"copy_recipient\": [],\n  \"hotel_booking_with_breakfast\": \"Yes\",\n  \"country\": \"Germany\",\n  \"employee_id\": \"HR-EMP-00277\",\n  \"employee_name\": \"Approver\",\n  \"company_code\": \"KMAH\",\n  \"approver\": \"chohan95332@gmail.com\",\n  \"departure_date_and_time\": \"2026-07-28 21:58:00\",\n  \"arrival_date_and_time\": \"2026-07-29 00:00:00\",\n  \"full_day\": 28,\n  \"half_day\": 14,\n    \"reason_business_purpose\": \"test 1\",\n  \"daily_allowance\": 1,\n  \"daily_allowance_details\": [\n    {\n      \"doctype\": \"Travel Expense Daily Allowance Detail\",\n      \"is_overnight_stay\": 0,\n      \"category_code\": \"101802\",\n      \"breakfast\": 1,\n      \"lunch\": 0,\n      \"dinner\": 0,\n      \"tip_amount\": 0,\n      \"total\": 8.4,\n      \"travel_date\": \"2026-07-28\",\n      \"overnight_stay\": 14,\n      \"number_of_overnight_stay\": 1\n    },\n    {\n      \"doctype\": \"Travel Expense Daily Allowance Detail\",\n      \"is_overnight_stay\": 0,\n      \"category_code\": \"101802\",\n      \"breakfast\": 1,\n      \"lunch\": 0,\n      \"dinner\": 0,\n      \"tip_amount\": 0,\n      \"total\": 8.4,\n      \"travel_date\": \"2026-07-29\",\n      \"overnight_stay\": 14,\n      \"number_of_overnight_stay\": 1\n    }\n  ],\n\n  \"invoice_claim\": 1,\n  \"use_ai\": 1,\n  \"replacement_receipt\": 0,\n\n  \"invoice_claim_details\": [\n    {\n      \"doctype\": \"Travel Expense Invoice Claim Detail\",\n      \"quantity\": 1,\n      \"currency\": \"EUR\",\n      \"vat_rate\": 19,\n      \"price\": 85.63,\n      \"vat_amount\": 16.27,\n      \"net_amount\": 85.63,\n      \"gross_amount\": 101.9,\n      \"vendor_name\": \"cyberport\",\n      \"invoice_no\": \"600265812752\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/MPPS6ASF_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"tax_included\": \"Yes\",\n      \"description\": \"1Q07-033 Microsoft Surface Slim Pen 2\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Flight Ticket (Domestic)\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101803\"\n    },\n    {\n      \"doctype\": \"Travel Expense Invoice Claim Detail\",\n      \"quantity\": 1,\n      \"currency\": \"EUR\",\n      \"vat_rate\": 19,\n      \"price\": 119.24,\n      \"vat_amount\": 22.66,\n      \"net_amount\": 119.24,\n      \"gross_amount\": 141.9,\n      \"vendor_name\": \"cyberport\",\n      \"invoice_no\": \"600165812752\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/MPPS6ASF_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"tax_included\": \"Yes\",\n      \"description\": \"1T27-02Y Microsoft Surface Pro\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Flight Ticket (Domestic)\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101803\"\n    }\n  ],\n\n  \"private_car\": 1,\n\n  \"private_car_expense_detail\": [\n    {\n      \"doctype\": \"Travel Expense Private Car Detail\",\n      \"category_code\": \"101801\",\n      \"travel_date\": \"2026-08-01\",\n      \"from_address\": \"Lahore\",\n      \"to_address\": \"Karachi\",\n      \"travelled_kilometers\": 1200,\n      \"rate_per_km\": 0.38,\n      \"claimed_amount\": 456,\n      \"vat_rate\": 0,\n      \"vat_amount\": 0\n    }\n  ],\n\n  \"total_tip\": 0,\n  \"total_vat_amount\": 38.93,\n  \"grand_total\": 733.4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Travel%20Expense%20Claim/KMAH-TR-2026-00006",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Travel%20Expense%20Claim",
+								"KMAH-TR-2026-00006"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit for approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Travel Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Draft\"\n  },\n  \"action\": \"Submit For Approval\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Travel Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Approve\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Travel Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Reject\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_approver_cc",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Expense%20Approver%20CC?fields=[\"parent\",\"custom_leave_approver_cc\"]&filters=[[\"parent\",\"=\",\"HR-EMP-00532\"]]",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Expense%20Approver%20CC"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "[\"parent\",\"custom_leave_approver_cc\"]"
+								},
+								{
+									"key": "filters",
+									"value": "[[\"parent\",\"=\",\"HR-EMP-00532\"]]"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Other Expense Claim",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Other Expense Claim\",\n  \"company\": \"EG Deutschland GmbH\",\n  \"posting_date\": \"2026-08-01\",\n  \"edit_posting_date\": 0,\n\n  \"copy_recipient\": [\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"adasd@gmail.com\"\n    }\n  ],\n\n  \"paid\": 0,\n  \"processed\": 0,\n\n  \"use_ai\": 0,\n  \"replacement_receipt\": 1,\n\n  \"other_expense_detail\": [\n    {\n      \"doctype\": \"Other Expense Detail\",\n      \"currency\": \"EUR\",\n      \"category_code\": \"101862\",\n\n      \"exchange_rate\": 1,\n\n      \"price\": 86.96,\n      \"vat_rate\": 15,\n      \"vat_amount\": 13.04,\n      \"net_amount\": 86.96,\n      \"gross_amount\": 100,\n\n      \"base_price\": 100,\n      \"base_vat_amount\": 13.04,\n      \"base_net_amount\": 86.96,\n      \"base_gross_amount\": 100,\n\n      \"base_tip_amount\": 0,\n      \"tip_amount\": 0,\n\n      \"vendor_name\": \"ATest\",\n      \"invoice_date\": \"2026-08-01\",\n      \"invoice_no\": \"OTH-100001\",\n\n      \"tax_included\": \"Yes\"\n    }\n  ],\n\n  \"total_vat_amount\": 13.04,\n  \"total_tip\": 0,\n  \"grand_total\": 100,\n\n  \"employee_id\": \"HR-EMP-00276\",\n  \"employee_name\": \"Applicant\",\n  \"company_code\": \"EGDE\",\n  \"approver\": \"chohan952@gmail.com\",\n\n  \"reason_business_purpose\": \"Test 1\",\n  \"travel_request\": \"EGDE-TRQ-2026-00004\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Other%20Expense%20Claim",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Other%20Expense%20Claim"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Other Expense Claim\",\n  \"company\": \"EG Deutschland GmbH\",\n  \"posting_date\": \"2026-08-01\",\n  \"edit_posting_date\": 0,\n\n  \"copy_recipient\": [\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"adasd@gmail.com\"\n    }\n  ],\n\n  \"paid\": 0,\n  \"processed\": 0,\n\n  \"use_ai\": 0,\n  \"replacement_receipt\": 1,\n\n  \"other_expense_detail\": [\n    {\n      \"doctype\": \"Other Expense Detail\",\n      \"currency\": \"EUR\",\n      \"category_code\": \"101862\",\n\n      \"exchange_rate\": 1,\n\n      \"price\": 86.96,\n      \"vat_rate\": 15,\n      \"vat_amount\": 13.04,\n      \"net_amount\": 86.96,\n      \"gross_amount\": 100,\n\n      \"base_price\": 100,\n      \"base_vat_amount\": 13.04,\n      \"base_net_amount\": 86.96,\n      \"base_gross_amount\": 100,\n\n      \"base_tip_amount\": 0,\n      \"tip_amount\": 0,\n\n      \"vendor_name\": \"ATest\",\n      \"invoice_date\": \"2026-08-01\",\n      \"invoice_no\": \"OTH-100001\",\n\n      \"tax_included\": \"Yes\"\n    }\n  ],\n\n  \"total_vat_amount\": 13.04,\n  \"total_tip\": 0,\n  \"grand_total\": 100,\n\n  \"employee_id\": \"HR-EMP-00276\",\n  \"employee_name\": \"Applicant\",\n  \"company_code\": \"EGDE\",\n  \"approver\": \"chohan952@gmail.com\",\n\n  \"reason_business_purpose\": \"Test 1112\",\n  \"travel_request\": \"EGDE-TRQ-2026-00004\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Other%20Expense%20Claim/EGDE-OEC-2026-00010",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Other%20Expense%20Claim",
+								"EGDE-OEC-2026-00010"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit for approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Other Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Draft\"\n  },\n  \"action\": \"Submit For Approval\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Other Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Approve\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Other Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Reject\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entertainment Expense Claim",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Entertainment Expense Claim\",\n  \"company\": \"EG Deutschland GmbH\",\n  \"posting_date\": \"2026-07-10\",\n  \"edit_posting_date\": 0,\n  \"copy_recipient\": [\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"adasd@gmail.com\"\n    }\n  ],\n  \"paid\": 0,\n  \"processed\": 0,\n  \"participants\": [],\n\n  \"hospitality_expense\": 1,\n  \"hospitality_expense_attachment_use_ai\": 1,\n  \"hospitality_replacement_receipt\": 0,\n\n  \"hospitality_expense_detail\": [\n    {\n      \"doctype\": \"Hospitality Expense Detail\",\n      \"currency\": \"EUR\",\n      \"exchange_rate\": 1,\n      \"base_price\": 101.9,\n      \"base_vat_amount\": 16.27,\n      \"base_net_amount\": 85.63,\n      \"base_gross_amount\": 101.9,\n      \"base_tip_amount\": 0,\n      \"price\": 85.63,\n      \"vat_amount\": 16.27,\n      \"net_amount\": 85.63,\n      \"gross_amount\": 101.9,\n      \"tip_amount\": 0,\n      \"expense_sub_category\": \"Entertainment expenses for business partners\",\n      \"description\": \"Microsoft Surface Slim Pen 2\",\n      \"category_code\": \"101852\",\n      \"vendor_name\": \"Cyberport SE\",\n      \"payment_method\": \"Card\",\n      \"invoice_date\": \"2026-03-05\",\n      \"invoice_no\": \"HOSP-100001\",\n      \"quantity\": 1,\n      \"vat_rate\": 19,\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/07/10/File/288D3IVO_No_vat_amount.jpg&file_name=No_vat_amount.jpg\"\n    },\n    {\n      \"doctype\": \"Hospitality Expense Detail\",\n      \"currency\": \"EUR\",\n      \"exchange_rate\": 1,\n      \"base_price\": 141.9,\n      \"base_vat_amount\": 22.66,\n      \"base_net_amount\": 119.24,\n      \"base_gross_amount\": 141.9,\n      \"base_tip_amount\": 0,\n      \"price\": 119.24,\n      \"vat_amount\": 22.66,\n      \"net_amount\": 119.24,\n      \"gross_amount\": 141.9,\n      \"tip_amount\": 0,\n      \"expense_sub_category\": \"Entertainment expenses for business partners\",\n      \"description\": \"Microsoft Surface Pro\",\n      \"category_code\": \"101852\",\n      \"vendor_name\": \"Cyberport SE\",\n      \"payment_method\": \"Card\",\n      \"invoice_date\": \"2026-03-05\",\n      \"invoice_no\": \"HOSP-100002\",\n      \"quantity\": 1,\n      \"vat_rate\": 19,\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/07/10/File/288D3IVO_No_vat_amount.jpg&file_name=No_vat_amount.jpg\"\n    }\n  ],\n\n  \"party_expense\": 1,\n  \"party_expense_attachment_use_ai\": 1,\n  \"party_replacement_receipt\": 0,\n\n  \"party_expense_detail\": [\n    {\n      \"doctype\": \"Party Expense Detail\",\n      \"currency\": \"EUR\",\n      \"quantity\": 1,\n      \"base_price\": 101.9,\n      \"base_vat_amount\": 16.27,\n      \"base_net_amount\": 85.63,\n      \"base_gross_amount\": 101.9,\n      \"base_tip_amount\": 0,\n      \"price\": 85.63,\n      \"vat_amount\": 16.27,\n      \"net_amount\": 85.63,\n      \"gross_amount\": 101.9,\n      \"tip_amount\": 0,\n      \"vendor_name\": \"Cyberport\",\n      \"invoice_no\": \"PARTY-100001\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/337WNVWL_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"vat_rate\": 19,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Microsoft Surface Slim Pen 2\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Company Event\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101860\"\n    },\n    {\n      \"doctype\": \"Party Expense Detail\",\n      \"currency\": \"EUR\",\n      \"quantity\": 1,\n      \"base_price\": 141.9,\n      \"base_vat_amount\": 22.66,\n      \"base_net_amount\": 119.24,\n      \"base_gross_amount\": 141.9,\n      \"base_tip_amount\": 0,\n      \"price\": 119.24,\n      \"vat_amount\": 22.66,\n      \"net_amount\": 119.24,\n      \"gross_amount\": 141.9,\n      \"tip_amount\": 0,\n      \"vendor_name\": \"Cyberport\",\n      \"invoice_no\": \"PARTY-100002\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/337WNVWL_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"vat_rate\": 19,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Microsoft Surface Pro\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Company Event\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101860\"\n    }\n  ],\n\n  \"gift_expense\": 1,\n  \"gift_expense_attachment_use_ai\": 1,\n  \"gift_replacement_receipt\": 0,\n\n  \"gift_expense_detail\": [\n    {\n      \"doctype\": \"Gift Expense Claim Detail\",\n      \"occasion\": \"Birthday\",\n      \"currency\": \"EUR\",\n      \"gift_category\": \"Below 35 EUR\",\n      \"vat_rate\": 19,\n      \"base_tip_amount\": 0,\n      \"price\": 15.04,\n      \"vat_amount\": 2.86,\n      \"net_amount\": 15.04,\n      \"gross_amount\": 17.9,\n      \"vendor_name\": \"Premier Inn Köln City Süd\",\n      \"invoice_no\": \"GIFT-100001\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/CGD1RVI5_scan-invoice.jpeg&file_name=scan-invoice.jpeg\",\n      \"invoice_date\": \"2025-12-11\",\n      \"payment_method\": \"Card\",\n      \"quantity\": 1,\n      \"base_price\": 17.9,\n      \"base_vat_amount\": 2.86,\n      \"base_gross_amount\": 17.9,\n      \"base_net_amount\": 15.04,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Frühstück Speisen\",\n      \"expense_category\": \"Travel\",\n      \"expense_sub_category\": \"Birthday Gift to Business Partner\",\n      \"exchange_rate\": 1,\n      \"tip_amount\": 0,\n      \"category_code\": \"101856\"\n    },\n    {\n      \"doctype\": \"Gift Expense Claim Detail\",\n      \"occasion\": \"Birthday\",\n      \"currency\": \"EUR\",\n      \"gift_category\": \"Above 53 EUR\",\n      \"vat_rate\": 7,\n      \"base_tip_amount\": 0,\n      \"price\": 89.42,\n      \"vat_amount\": 6.26,\n      \"net_amount\": 89.42,\n      \"gross_amount\": 95.68,\n      \"vendor_name\": \"Premier Inn Köln City Süd\",\n      \"invoice_no\": \"GIFT-100002\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/CGD1RVI5_scan-invoice.jpeg&file_name=scan-invoice.jpeg\",\n      \"invoice_date\": \"2025-12-11\",\n      \"payment_method\": \"Card\",\n      \"quantity\": 1,\n      \"base_price\": 95.68,\n      \"base_vat_amount\": 6.26,\n      \"base_gross_amount\": 95.68,\n      \"base_net_amount\": 89.42,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Übernachtung\",\n      \"expense_category\": \"Travel\",\n      \"expense_sub_category\": \"Birthday Gift to Business Partner\",\n      \"exchange_rate\": 1,\n      \"tip_amount\": 0,\n      \"category_code\": \"101856\"\n    }\n  ],\n\n  \"total_vat_amount\": 86.98,\n  \"total_tip_amount\": 0,\n  \"grand_total\": 601.18,\n\n  \"employee_id\": \"HR-EMP-00276\",\n  \"employee_name\": \"Applicant\",\n  \"company_code\": \"EGDE\",\n  \"approver\": \"chohan952@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Entertainment%20Expense%20Claim",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Entertainment%20Expense%20Claim"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Entertainment Expense Claim\",\n  \"name\": \"EGDE-EN-2026-00017\",\n  \"company\": \"EG Deutschland GmbH\",\n  \"posting_date\": \"2026-07-10\",\n  \"edit_posting_date\": 0,\n  \"copy_recipient\": [\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"adasd@gmail.com\"\n    }\n  ],\n  \"participants\": [\n    {\n      \"type\": \"Employee\",\n      \"participant_name\": \"Tasawar\",\n      \"company\": \"Timestx\"\n    },\n    {\n      \"type\": \"Business Partner\",\n      \"participant_name\": \"Junaid\",\n      \"company\": \"TimesTx\"\n    }\n  ],\n  \"paid\": 0,\n  \"processed\": 0,\n  \"hospitality_expense\": 1,\n  \"hospitality_expense_attachment_use_ai\": 1,\n  \"hospitality_replacement_receipt\": 0,\n\n  \"hospitality_expense_detail\": [\n    {\n      \"currency\": \"EUR\",\n      \"exchange_rate\": 1,\n      \"base_price\": 101.9,\n      \"base_vat_amount\": 16.27,\n      \"base_net_amount\": 85.63,\n      \"base_gross_amount\": 101.9,\n      \"base_tip_amount\": 0,\n      \"price\": 85.63,\n      \"vat_amount\": 16.27,\n      \"net_amount\": 85.63,\n      \"gross_amount\": 101.9,\n      \"tip_amount\": 0,\n      \"expense_sub_category\": \"Entertainment expenses for business partners\",\n      \"description\": \"Microsoft Surface Slim Pen 21\",\n      \"category_code\": \"101852\",\n      \"vendor_name\": \"Cyberport SE\",\n      \"payment_method\": \"Card\",\n      \"invoice_date\": \"2026-03-05\",\n      \"invoice_no\": \"HOSP-100001\",\n      \"quantity\": 1,\n      \"vat_rate\": 19,\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/07/10/File/288D3IVO_No_vat_amount.jpg&file_name=No_vat_amount.jpg\"\n    },\n    {\n      \"currency\": \"EUR\",\n      \"exchange_rate\": 1,\n      \"base_price\": 141.9,\n      \"base_vat_amount\": 22.66,\n      \"base_net_amount\": 119.24,\n      \"base_gross_amount\": 141.9,\n      \"base_tip_amount\": 0,\n      \"price\": 119.24,\n      \"vat_amount\": 22.66,\n      \"net_amount\": 119.24,\n      \"gross_amount\": 141.9,\n      \"tip_amount\": 0,\n      \"expense_sub_category\": \"Entertainment expenses for business partners\",\n      \"description\": \"Microsoft Surface Pro\",\n      \"category_code\": \"101852\",\n      \"vendor_name\": \"Cyberport SE\",\n      \"payment_method\": \"Card\",\n      \"invoice_date\": \"2026-03-05\",\n      \"invoice_no\": \"HOSP-100002\",\n      \"quantity\": 1,\n      \"vat_rate\": 19,\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/07/10/File/288D3IVO_No_vat_amount.jpg&file_name=No_vat_amount.jpg\"\n    }\n  ],\n\n  \"party_expense\": 1,\n  \"party_expense_attachment_use_ai\": 1,\n  \"party_replacement_receipt\": 0,\n\n  \"party_expense_detail\": [\n    {\n      \"currency\": \"EUR\",\n      \"quantity\": 1,\n      \"base_price\": 101.9,\n      \"base_vat_amount\": 16.27,\n      \"base_net_amount\": 85.63,\n      \"base_gross_amount\": 101.9,\n      \"base_tip_amount\": 0,\n      \"price\": 85.63,\n      \"vat_amount\": 16.27,\n      \"net_amount\": 85.63,\n      \"gross_amount\": 101.9,\n      \"tip_amount\": 0,\n      \"vendor_name\": \"Cyberport\",\n      \"invoice_no\": \"PARTY-100001\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/337WNVWL_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"vat_rate\": 19,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Microsoft Surface Slim Pen 2\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Company Event\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101860\"\n    },\n    {\n      \"currency\": \"EUR\",\n      \"quantity\": 1,\n      \"base_price\": 141.9,\n      \"base_vat_amount\": 22.66,\n      \"base_net_amount\": 119.24,\n      \"base_gross_amount\": 141.9,\n      \"base_tip_amount\": 0,\n      \"price\": 119.24,\n      \"vat_amount\": 22.66,\n      \"net_amount\": 119.24,\n      \"gross_amount\": 141.9,\n      \"tip_amount\": 0,\n      \"vendor_name\": \"Cyberport\",\n      \"invoice_no\": \"PARTY-100002\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/337WNVWL_No_vat_amount.jpg&file_name=No_vat_amount.jpg\",\n      \"invoice_date\": \"2026-03-05\",\n      \"payment_method\": \"Card\",\n      \"vat_rate\": 19,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Microsoft Surface Pro\",\n      \"expense_category\": \"Office\",\n      \"expense_sub_category\": \"Company Event\",\n      \"exchange_rate\": 1,\n      \"category_code\": \"101860\"\n    }\n  ],\n\n  \"gift_expense\": 1,\n  \"gift_expense_attachment_use_ai\": 1,\n  \"gift_replacement_receipt\": 0,\n\n  \"gift_expense_detail\": [\n    {\n      \"occasion\": \"Birthday\",\n      \"currency\": \"EUR\",\n      \"gift_category\": \"Below 35 EUR\",\n      \"vat_rate\": 19,\n      \"base_tip_amount\": 0,\n      \"price\": 15.04,\n      \"vat_amount\": 2.86,\n      \"net_amount\": 15.04,\n      \"gross_amount\": 17.9,\n      \"vendor_name\": \"Premier Inn Köln City Süd\",\n      \"invoice_no\": \"GIFT-100001\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/CGD1RVI5_scan-invoice.jpeg&file_name=scan-invoice.jpeg\",\n      \"invoice_date\": \"2025-12-11\",\n      \"payment_method\": \"Card\",\n      \"quantity\": 1,\n      \"base_price\": 17.9,\n      \"base_vat_amount\": 2.86,\n      \"base_gross_amount\": 17.9,\n      \"base_net_amount\": 15.04,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Frühstück Speisen\",\n      \"expense_category\": \"Travel\",\n      \"expense_sub_category\": \"Birthday Gift to Business Partner\",\n      \"exchange_rate\": 1,\n      \"tip_amount\": 0,\n      \"category_code\": \"101856\"\n    },\n    {\n      \"occasion\": \"Birthday\",\n      \"currency\": \"EUR\",\n      \"gift_category\": \"Above 53 EUR\",\n      \"vat_rate\": 7,\n      \"base_tip_amount\": 0,\n      \"price\": 89.42,\n      \"vat_amount\": 6.26,\n      \"net_amount\": 89.42,\n      \"gross_amount\": 95.68,\n      \"vendor_name\": \"Premier Inn Köln City Süd\",\n      \"invoice_no\": \"GIFT-100002\",\n      \"expense_attachment\": \"/api/method/frappe_s3_attachment.controller.generate_file?key=EG/2026/08/03/File/CGD1RVI5_scan-invoice.jpeg&file_name=scan-invoice.jpeg\",\n      \"invoice_date\": \"2025-12-11\",\n      \"payment_method\": \"Card\",\n      \"quantity\": 1,\n      \"base_price\": 95.68,\n      \"base_vat_amount\": 6.26,\n      \"base_gross_amount\": 95.68,\n      \"base_net_amount\": 89.42,\n      \"tax_included\": \"Yes\",\n      \"description\": \"Übernachtung\",\n      \"expense_category\": \"Travel\",\n      \"expense_sub_category\": \"Birthday Gift to Business Partner\",\n      \"exchange_rate\": 1,\n      \"tip_amount\": 0,\n      \"category_code\": \"101856\"\n    }\n  ],\n\n  \"total_vat_amount\": 86.98,\n  \"total_tip_amount\": 0,\n  \"grand_total\": 601.18,\n\n  \"employee_id\": \"HR-EMP-00276\",\n  \"employee_name\": \"Applicant\",\n  \"company_code\": \"EGDE\",\n  \"approver\": \"chohan952@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Entertainment%20Expense%20Claim/EGDE-EN-2026-00017",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Entertainment%20Expense%20Claim",
+								"EGDE-EN-2026-00017"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit for approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Other Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Draft\"\n  },\n  \"action\": \"Submit For Approval\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Other Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Approve\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaG9oYW45NTJAZ21haWwuY29tIiwiaWF0IjoxNzg1NzgwMjQ4LCJleHAiOjE3ODU3ODM4NDh9.fZag_Abv6X3yEWENMwqHaFCBIBl-197U2QKxYBpi8ZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Other Expense Claim\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Reject\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/method/werkiq_go.api.notification.get_notifications?page=1&limit=20",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"werkiq_go.api.notification.get_notifications"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark as read",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"pprj0vcjs8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/werkiq_go.api.notification.mark_as_read",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"werkiq_go.api.notification.mark_as_read"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Travel Request",
+			"item": [
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Travel Request\",\n  \"custom_expense_approver_cc\": [\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"christian.lange@eg.group\"\n    },\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"clemens.steiner@eg.group\"\n    }\n  ],\n  \"travel_type\": \"Domestic\",\n  \"travel_funding\": \"\",\n  \"custom_country\": \"Germany\",\n  \"itinerary\": [\n    {\n      \"doctype\": \"Travel Itinerary\",\n      \"mode_of_travel\": \"Flight\",\n      \"meal_preference\": \"\",\n      \"travel_from\": \"Lahore\",\n      \"travel_to\": \"Karachi\",\n      \"departure_date\": \"2026-08-15 19:35:00\",\n      \"arrival_date\": \"2026-08-17 10:35:00\"\n    }\n  ],\n  \"employee\": \"HR-EMP-00277\",\n  \"purpose_of_travel\": \"Work\",\n  \"custom_estimated_cost\": 100,\n  \"description\": \"test 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Travel Request",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Travel Request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctype\": \"Travel Request\",\n  \"custom_expense_approver_cc\": [\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"christian.lange@eg.group\"\n    },\n    {\n      \"doctype\": \"Expense Approver CC\",\n      \"approver\": \"clemens.steiner@eg.group\"\n    }\n  ],\n  \"travel_type\": \"Domestic\",\n  \"travel_funding\": \"\",\n  \"custom_country\": \"Germany\",\n  \"itinerary\": [\n    {\n      \"doctype\": \"Travel Itinerary\",\n      \"mode_of_travel\": \"Flight\",\n      \"meal_preference\": \"\",\n      \"travel_from\": \"Lahore\",\n      \"travel_to\": \"Karachi\",\n      \"departure_date\": \"2026-08-15 19:35:00\",\n      \"arrival_date\": \"2026-08-17 10:35:00\"\n    }\n  ],\n  \"employee\": \"HR-EMP-00277\",\n  \"purpose_of_travel\": \"Work\",\n  \"custom_estimated_cost\": 100,\n  \"description\": \"test 11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Travel Request/KMAH-TRQ-2026-00007",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Travel Request",
+								"KMAH-TRQ-2026-00007"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit for approval",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Travel Request\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Draft\"\n  },\n  \"action\": \"Submit For Approval\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Travel Request\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Approve\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doc\": {\n    \"doctype\": \"Travel Request\",\n    \"name\": \"EGDE-OEC-2026-00011\",\n    \"workflow_state\": \"Submit For Approval\"\n  },\n  \"action\": \"Reject\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/method/frappe.model.workflow.apply_workflow",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.model.workflow.apply_workflow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Travel Request/EGDE-TRQ-2026-00006",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Travel Request",
+								"EGDE-TRQ-2026-00006"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purpose of Travel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Purpose of Travel",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Purpose of Travel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Travel Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/method/werkiq_go.api.helper.get_travel_types",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"werkiq_go.api.helper.get_travel_types"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "Checkin-Checkout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/method/werkiq_go.api.attendance.perform_attendance_action?device_id=WerkIQ Go",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"werkiq_go.api.attendance.perform_attendance_action"
+							],
+							"query": [
+								{
+									"key": "device_id",
+									"value": "WerkIQ Go"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Checkin status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/method/werkiq_go.api.attendance.get_attendance_status",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"werkiq_go.api.attendance.get_attendance_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/resource/Attendance?fields=[\"name\",\"employee\",\"employee_name\",\"attendance_date\",\"status\",\"in_time\",\"out_time\",\"working_hours\"]&filters=[[\"employee\",\"=\",\"HR-EMP-00277\"]]&order_by=attendance_date%20desc&limit_page_length=100",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"resource",
+								"Attendance"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "[\"name\",\"employee\",\"employee_name\",\"attendance_date\",\"status\",\"in_time\",\"out_time\",\"working_hours\"]"
+								},
+								{
+									"key": "filters",
+									"value": "[[\"employee\",\"=\",\"HR-EMP-00277\"]]"
+								},
+								{
+									"key": "order_by",
+									"value": "attendance_date%20desc"
+								},
+								{
+									"key": "limit_page_length",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"email\": \"chohan952@gmail.com\", \"password\": \"chohan_asd\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/api/method/werkiq_go.api.auth.login",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"werkiq_go.api.auth.login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"usr\": \"chohan952@gmail.com\", \"pwd\": \"chohan_asd\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/api/method/login",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/method/logout",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_employee_profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/method/werkiq_go.api.employee.get_employee_profile",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"werkiq_go.api.employee.get_employee_profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_employee_list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/resource/Employee?fields=[\"name\",\"company\",\"employee_name\"]",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"resource",
+						"Employee"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "[\"name\",\"company\",\"employee_name\"]"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/method/frappe.auth.get_logged_user",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"frappe.auth.get_logged_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_employee_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/resource/Employee?filters=[[\"user_id\",\"=\",\"chohan952@gmail.com\"]]",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"resource",
+						"Employee"
+					],
+					"query": [
+						{
+							"key": "filters",
+							"value": "[[\"user_id\",\"=\",\"chohan952@gmail.com\"]]"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "department_list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"department_name\": \"Test\",\n    \"parent_department\": \"All Departments\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/api/resource/Department/",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"resource",
+						"Department",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dashboard Summary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/method/werkiq_go.api.homepage.get_homepage_summary?page=1&limit=2",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"werkiq_go.api.homepage.get_homepage_summary"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Requests List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/method/werkiq_go.api.requests.get_requests?from_date=2026-07-01&to_date=2026-07-30&page=1&limit=10&status=Approved",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"method",
+						"werkiq_go.api.requests.get_requests"
+					],
+					"query": [
+						{
+							"key": "from_date",
+							"value": "2026-07-01"
+						},
+						{
+							"key": "to_date",
+							"value": "2026-07-30"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "status",
+							"value": "Approved"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "language update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"language\": \"en\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/api/resource/User/chohan952@gmail.com",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"resource",
+						"User",
+						"chohan952@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Country List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/resource/Country?limit_page_length=0",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"resource",
+						"Country"
+					],
+					"query": [
+						{
+							"key": "limit_page_length",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "http://eg.localhost:8019",
+			"type": "string"
+		},
+		{
+			"key": "stageurl",
+			"value": "https://eg-stage.werkiq.com/",
+			"type": "string"
+		},
+		{
+			"key": "liveurl",
+			"value": "https://eg.werkiq.com/",
+			"type": "string"
+		}
+	]
+}
