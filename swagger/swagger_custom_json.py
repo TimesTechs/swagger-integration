@@ -1667,7 +1667,7 @@ CUSTOM_APIS = {
         },
     },
     # ==================================================================
-    # Timesheet (Frappe REST on Employee Timesheet + workflow)
+    # Timesheet (Frappe REST + workflow)
     # ==================================================================
     "/api/resource/Employee Timesheet": {
         "get": {
@@ -1715,9 +1715,9 @@ CUSTOM_APIS = {
         "post": {
             "summary": "Employee Timesheet — Add",
             "description": (
-                "Create a new Employee Timesheet for a month. "
-                "One timesheet per employee/month/year. "
-                "Child rows go in table_miqy (Employee Timesheet Entry)."
+                "Create Employee Timesheet via Frappe REST (DocType: Employee Timesheet). "
+                "Required: employee, month, year, timesheet_approver. "
+                "Auto-filled on save: employee_name, company_name, expected_hours."
             ),
             "tags": ["Timesheet"],
             "requestBody": {
@@ -1734,26 +1734,21 @@ CUSTOM_APIS = {
                                 "timesheet_approver",
                             ],
                             "properties": {
-                                "doctype": {"type": "string", "example": "Employee Timesheet"},
+                                "doctype": {
+                                    "type": "string",
+                                    "example": "Employee Timesheet",
+                                },
                                 "employee": {
                                     "type": "string",
                                     "description": "Employee ID.",
-                                    "example": "HR-EMP-00277",
+                                    "example": "HR-EMP-00001",
                                 },
-                                "month": {
-                                    "type": "string",
-                                    "description": "Month name (January–December).",
-                                    "example": "September",
-                                },
-                                "year": {
-                                    "type": "string",
-                                    "description": "Calendar year.",
-                                    "example": "2026",
-                                },
+                                "month": {"type": "string", "example": "September"},
+                                "year": {"type": "string", "example": "2026"},
                                 "timesheet_approver": {
                                     "type": "string",
                                     "description": "Timesheet approver User email.",
-                                    "example": "chohan95332@gmail.com",
+                                    "example": "osc24osc@gmail.com",
                                 },
                                 "timesheet_approver_cc": {
                                     "type": "array",
@@ -1767,6 +1762,7 @@ CUSTOM_APIS = {
                                         "properties": {
                                             "approver": {
                                                 "type": "string",
+                                                "description": "CC approver User email.",
                                                 "example": "christian.lange@eg.group",
                                             },
                                         },
@@ -1774,45 +1770,105 @@ CUSTOM_APIS = {
                                 },
                                 "table_miqy": {
                                     "type": "array",
-                                    "description": "Daily timesheet rows (Employee Timesheet Entry).",
+                                    "description": (
+                                        "Employee Timesheet Entry rows. Desk columns map to: "
+                                        "Date=date, Start=start, End=end, Break=pause_hour, "
+                                        "Working Hours=working_hours (read-only), "
+                                        "Difference Hours=difference_hours (read-only), "
+                                        "Comments=comments, Entry Type=entry_type, "
+                                        "Updated=created_on."
+                                    ),
                                     "items": {
                                         "type": "object",
-                                        "required": ["doctype", "date"],
                                         "properties": {
                                             "doctype": {
                                                 "type": "string",
                                                 "example": "Employee Timesheet Entry",
                                             },
-                                            "date": {"type": "string", "format": "date"},
+                                            "date": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "description": "Desk: Date",
+                                            },
                                             "start": {
                                                 "type": "string",
-                                                "description": "Check-in time (HH:MM:SS).",
-                                                "example": "08:00:00",
+                                                "description": "Desk: Start (HH:MM:SS)",
                                             },
                                             "end": {
                                                 "type": "string",
-                                                "description": "Check-out time (HH:MM:SS).",
-                                                "example": "17:00:00",
+                                                "description": "Desk: End (HH:MM:SS)",
                                             },
                                             "pause_hour": {
                                                 "type": "string",
-                                                "description": "Break duration (HH:MM:SS).",
-                                                "example": "00:45:00",
+                                                "description": "Desk: Break (HH:MM:SS)",
                                             },
-                                            "entry_type": {
+                                            "working_hours": {
                                                 "type": "string",
-                                                "description": (
-                                                    "WKE - Weekend / GFT - Public Holidays for "
-                                                    "holiday rows; leave codes for manual leave."
-                                                ),
-                                                "example": "Default",
+                                                "description": "Desk: Working Hours (auto on submit)",
+                                            },
+                                            "difference_hours": {
+                                                "type": "string",
+                                                "description": "Desk: Difference Hours",
+                                                "example": "00:15:00",
                                             },
                                             "comments": {
                                                 "type": "string",
+                                                "description": "Desk: Comments",
+                                                "example": "Leave: EZT - Elternzeit",
+                                            },
+                                            "entry_type": {
+                                                "type": "string",
+                                                "description": "Desk: Entry Type",
+                                            },
+                                            "created_on": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "description": "Desk: Updated",
+                                                "example": "2026-10-01 17:30:00",
+                                            },
+                                        },
+                                    },
+                                },
+                                "timesheet_anomaly": {
+                                    "type": "array",
+                                    "description": (
+                                        "Optional exception flags (Timesheet Anomaly child table)."
+                                    ),
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "doctype": {
+                                                "type": "string",
+                                                "example": "Timesheet Anomaly",
+                                            },
+                                            "editor": {
+                                                "type": "string",
+                                                "description": "Employee ID (Anomaly ID).",
+                                                "example": "HR-EMP-00001",
+                                            },
+                                            "anomaly": {
+                                                "type": "string",
                                                 "description": (
-                                                    "Leave rows synced from Leave Application "
-                                                    "use prefix \"Leave: <type>\"."
+                                                    "Category: Overtime, Break, Time Adjustment, "
+                                                    "Rest Rule Violation, Weekend Work."
                                                 ),
+                                                "example": "Overtime",
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "description": "Reason / message for the flag.",
+                                                "example": "Worked extra hours on project deadline",
+                                            },
+                                            "details": {
+                                                "type": "string",
+                                                "description": "Optional detail (e.g. affected date).",
+                                                "example": "2026-09-01",
+                                            },
+                                            "modified_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "description": "Last updated timestamp.",
+                                                "example": "2026-09-01 17:30:00",
                                             },
                                         },
                                     },
@@ -1821,33 +1877,33 @@ CUSTOM_APIS = {
                         },
                         "example": {
                             "doctype": "Employee Timesheet",
-                            "employee": "HR-EMP-00277",
-                            "month": "September",
+                            "employee": "HR-EMP-00001",
+                            "month": "October",
                             "year": "2026",
-                            "timesheet_approver": "chohan95332@gmail.com",
-                            "timesheet_approver_cc": [
-                                {"approver": "christian.lange@eg.group"},
-                                {"approver": "clemens.steiner@eg.group"},
-                            ],
+                            "timesheet_approver": "osc24osc@gmail.com",
+                            "timesheet_approver_cc": [],
                             "table_miqy": [
                                 {
                                     "doctype": "Employee Timesheet Entry",
-                                    "date": "2026-09-01",
+                                    "date": "2026-10-01",
                                     "start": "08:00:00",
                                     "end": "17:00:00",
                                     "pause_hour": "00:45:00",
                                     "entry_type": "Default",
-                                },
-                                {
-                                    "doctype": "Employee Timesheet Entry",
-                                    "date": "2026-09-06",
-                                    "entry_type": "WKE - Weekend",
-                                },
-                                {
-                                    "doctype": "Employee Timesheet Entry",
-                                    "date": "2026-09-08",
+                                    "difference_hours": "00:15:00",
                                     "comments": "Leave: EZT - Elternzeit",
-                                },
+                                    "created_on": "2026-10-01 17:30:00",
+                                }
+                            ],
+                            "timesheet_anomaly": [
+                                {
+                                    "doctype": "Timesheet Anomaly",
+                                    "editor": "HR-EMP-00001",
+                                    "anomaly": "Overtime",
+                                    "message": "Worked extra hours on project deadline",
+                                    "details": "2026-10-01",
+                                    "modified_at": "2026-10-01 17:30:00",
+                                }
                             ],
                         },
                     },
