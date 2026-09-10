@@ -1667,6 +1667,40 @@ CUSTOM_APIS = {
         },
     },
     # ==================================================================
+    # Leave Reports (Frappe built-in report only;
+    # employee_portal.api.api.* auto via validate_http_method — not listed here)
+    # ==================================================================
+    "/api/method/frappe.desk.query_report.run/annual-leave-calendar": {
+        "get": {
+            "summary": "Annual Leave Calendar",
+            "description": (
+                "Leaves workspace report (Employee Portal Script Report). "
+                "Actual endpoint: GET /api/method/frappe.desk.query_report.run"
+            ),
+            "tags": ["Leave Reports"],
+            "parameters": [
+                {
+                    "name": "report_name",
+                    "in": "query",
+                    "required": True,
+                    "schema": {"type": "string"},
+                    "example": "Annual Leave Calendar",
+                },
+                {
+                    "name": "filters",
+                    "in": "query",
+                    "required": True,
+                    "schema": {"type": "string"},
+                    "example": (
+                        '{"from_date":"2026-01-01","to_date":"2026-12-31",'
+                        '"employee":"HR-EMP-00001"}'
+                    ),
+                },
+            ],
+            "responses": _OK_RESPONSE,
+        },
+    },
+    # ==================================================================
     # Timesheet (Frappe REST + workflow)
     # ==================================================================
     "/api/resource/Employee Timesheet": {
