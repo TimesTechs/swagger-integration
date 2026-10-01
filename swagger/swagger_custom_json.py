@@ -1923,7 +1923,7 @@ CUSTOM_APIS = {
                                     "start": "08:00:00",
                                     "end": "17:00:00",
                                     "pause_hour": "00:45:00",
-                                    "entry_type": "Default",
+                                    "entry_type": "ABT - Workday",
                                     "difference_hours": "00:15:00",
                                     "comments": "Leave: EZT - Elternzeit",
                                     "created_on": "2026-10-01 17:30:00",
@@ -2062,7 +2062,7 @@ CUSTOM_APIS = {
                                     "start": "08:30:00",
                                     "end": "17:30:00",
                                     "pause_hour": "00:45:00",
-                                    "entry_type": "Default",
+                                    "entry_type": "ABT - Workday",
                                 },
                                 {
                                     "doctype": "Employee Timesheet Entry",
@@ -2071,7 +2071,7 @@ CUSTOM_APIS = {
                                     "start": "09:00:00",
                                     "end": "18:00:00",
                                     "pause_hour": "01:00:00",
-                                    "entry_type": "Default",
+                                    "entry_type": "ABT - Workday",
                                 },
                             ],
                         },
@@ -2148,6 +2148,306 @@ CUSTOM_APIS = {
                                 "name": "HR-ET-2026-00001",
                                 "workflow_state": "Submitted",
                                 "reason": "Missing entries for 3 days",
+                            },
+                            "action": "Reject",
+                        },
+                    },
+                },
+            },
+            "responses": _OK_RESPONSE,
+        },
+    },
+    # ==================================================================
+    # Replacement Request (Frappe REST + workflow + desk helpers)
+    # ==================================================================
+    "/api/resource/Replacement Request": {
+        "get": {
+            "summary": "Replacement Request — List",
+            "description": "List Replacement Request documents (Frappe REST).",
+            "tags": ["Replacement"],
+            "parameters": [
+                {
+                    "name": "fields",
+                    "in": "query",
+                    "required": False,
+                    "schema": {"type": "string"},
+                    "example": (
+                        '["name","employee","employee_name","from_date","to_date",'
+                        '"replacement_employee","replacement_name","leave_application",'
+                        '"reason","workflow_state","posting_date","modified"]'
+                    ),
+                },
+                {
+                    "name": "filters",
+                    "in": "query",
+                    "required": False,
+                    "schema": {"type": "string"},
+                    "example": (
+                        '[["employee","=","HR-EMP-00277"],'
+                        '["workflow_state","=","Submitted"]]'
+                    ),
+                },
+                {
+                    "name": "order_by",
+                    "in": "query",
+                    "required": False,
+                    "schema": {"type": "string"},
+                    "example": "modified desc",
+                },
+                {
+                    "name": "limit_page_length",
+                    "in": "query",
+                    "required": False,
+                    "schema": {"type": "integer"},
+                    "example": 20,
+                },
+            ],
+            "responses": _OK_RESPONSE,
+        },
+        "post": {
+            "summary": "Replacement Request — Add",
+            "description": (
+                "Create Replacement Request via Frappe REST. "
+                "Required: employee, replacement_employee, and either leave_application "
+                "or from_date + to_date. Child table replacement_request_leave_detail "
+                "is filled on save when leave_application is linked."
+            ),
+            "tags": ["Replacement"],
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "doctype",
+                                "employee",
+                                "replacement_employee",
+                            ],
+                            "properties": {
+                                "doctype": {
+                                    "type": "string",
+                                    "example": "Replacement Request",
+                                },
+                                "employee": {
+                                    "type": "string",
+                                    "description": "Requesting Employee ID.",
+                                    "example": "HR-EMP-00001",
+                                },
+                                "leave_application": {
+                                    "type": "string",
+                                    "description": "Optional approved Leave Application.",
+                                    "example": "HR-LAP-2026-00012",
+                                },
+                                "from_date": {"type": "string", "format": "date"},
+                                "to_date": {"type": "string", "format": "date"},
+                                "replacement_employee": {
+                                    "type": "string",
+                                    "description": "Replacement Employee ID (approver).",
+                                    "example": "HR-EMP-00277",
+                                },
+                                "reason": {
+                                    "type": "string",
+                                    "description": "Employee reason for the request.",
+                                },
+                                "posting_date": {"type": "string", "format": "date"},
+                            },
+                        },
+                        "example": {
+                            "doctype": "Replacement Request",
+                            "employee": "HR-EMP-00001",
+                            "leave_application": "HR-LAP-2026-00012",
+                            "replacement_employee": "HR-EMP-00277",
+                            "reason": "Covering team lead during leave",
+                        },
+                    },
+                },
+            },
+            "responses": _OK_RESPONSE,
+        },
+    },
+    "/api/resource/Replacement Request/{name}": {
+        "get": {
+            "summary": "Replacement Request — Get",
+            "description": "Get a single Replacement Request by name (Frappe REST).",
+            "tags": ["Replacement"],
+            "parameters": [
+                {
+                    "name": "name",
+                    "in": "path",
+                    "required": True,
+                    "schema": {"type": "string"},
+                    "example": "HR-RR-2026-00001",
+                },
+            ],
+            "responses": _OK_RESPONSE,
+        },
+        "put": {
+            "summary": "Replacement Request — Edit",
+            "description": "Update a Replacement Request document (typically Draft).",
+            "tags": ["Replacement"],
+            "parameters": [
+                {
+                    "name": "name",
+                    "in": "path",
+                    "required": True,
+                    "schema": {"type": "string"},
+                    "example": "HR-RR-2026-00001",
+                },
+            ],
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": ["doctype", "name", "employee", "replacement_employee"],
+                            "properties": {
+                                "doctype": {
+                                    "type": "string",
+                                    "example": "Replacement Request",
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "HR-RR-2026-00001",
+                                },
+                                "employee": {"type": "string", "example": "HR-EMP-00001"},
+                                "leave_application": {"type": "string"},
+                                "from_date": {"type": "string", "format": "date"},
+                                "to_date": {"type": "string", "format": "date"},
+                                "replacement_employee": {
+                                    "type": "string",
+                                    "example": "HR-EMP-00277",
+                                },
+                                "reason": {"type": "string"},
+                                "rejection_reason": {
+                                    "type": "string",
+                                    "description": "Set by approver before Reject workflow action.",
+                                },
+                                "posting_date": {"type": "string", "format": "date"},
+                            },
+                        },
+                        "example": {
+                            "doctype": "Replacement Request",
+                            "name": "HR-RR-2026-00001",
+                            "employee": "HR-EMP-00001",
+                            "replacement_employee": "HR-EMP-00277",
+                            "reason": "Updated reason",
+                        },
+                    },
+                },
+            },
+            "responses": _OK_RESPONSE,
+        },
+        "delete": {
+            "summary": "Replacement Request — Delete",
+            "description": "Delete a Replacement Request document (Frappe REST).",
+            "tags": ["Replacement"],
+            "parameters": [
+                {
+                    "name": "name",
+                    "in": "path",
+                    "required": True,
+                    "schema": {"type": "string"},
+                    "example": "HR-RR-2026-00001",
+                },
+            ],
+            "responses": _OK_RESPONSE,
+        },
+    },
+    "/api/method/employee_portal.employee_portal.doctype.replacement_request.replacement_request.get_leave_application_detail": {
+        "get": {
+            "summary": "Get leave application detail",
+            "description": (
+                "Desk helper — returns leave fields for Replacement Request when "
+                "leave_application is selected (same as form fetch)."
+            ),
+            "tags": ["Replacement"],
+            "parameters": [
+                {
+                    "name": "leave_application",
+                    "in": "query",
+                    "required": True,
+                    "schema": {"type": "string"},
+                    "example": "HR-LAP-2026-00012",
+                },
+            ],
+            "responses": _OK_RESPONSE,
+        },
+    },
+    "/api/method/frappe.model.workflow.apply_workflow/replacement-request/submit-for-approval": {
+        "post": {
+            "summary": "submit for approval",
+            "description": (
+                "Replacement Request — submit for approval via "
+                "POST /api/method/frappe.model.workflow.apply_workflow"
+            ),
+            "tags": ["Replacement"],
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {"type": "object"},
+                        "example": {
+                            "doc": {
+                                "doctype": "Replacement Request",
+                                "name": "HR-RR-2026-00001",
+                                "workflow_state": "Draft",
+                            },
+                            "action": "Submit For Approval",
+                        },
+                    },
+                },
+            },
+            "responses": _OK_RESPONSE,
+        },
+    },
+    "/api/method/frappe.model.workflow.apply_workflow/replacement-request/approve": {
+        "post": {
+            "summary": "approve",
+            "description": (
+                "Replacement Request — approve via apply_workflow. "
+                "Performed by the replacement employee's User."
+            ),
+            "tags": ["Replacement"],
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {"type": "object"},
+                        "example": {
+                            "doc": {
+                                "doctype": "Replacement Request",
+                                "name": "HR-RR-2026-00001",
+                                "workflow_state": "Submitted",
+                            },
+                            "action": "Approve",
+                        },
+                    },
+                },
+            },
+            "responses": _OK_RESPONSE,
+        },
+    },
+    "/api/method/frappe.model.workflow.apply_workflow/replacement-request/reject": {
+        "post": {
+            "summary": "Reject",
+            "description": (
+                "Replacement Request — reject via apply_workflow. "
+                "PUT rejection_reason on the document before rejecting."
+            ),
+            "tags": ["Replacement"],
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {"type": "object"},
+                        "example": {
+                            "doc": {
+                                "doctype": "Replacement Request",
+                                "name": "HR-RR-2026-00001",
+                                "workflow_state": "Submitted",
+                                "rejection_reason": "Not available for these dates",
                             },
                             "action": "Reject",
                         },
